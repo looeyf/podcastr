@@ -2,7 +2,7 @@ import { useContext, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Slider from 'rc-slider';
 
-import { PlayerContext } from '../../contexts/playerContext';
+import { PlayerContext } from '../../contexts/PlayerContext';
 
 import 'rc-slider/assets/index.css';
 import styles from './styles.module.scss';
@@ -15,7 +15,11 @@ export default function Player() {
     currentEpisodeIndex,
     isPlaying,
     togglePlay,
-    setPlayingState
+    setPlayingState,
+    playNext,
+    playPrevious,
+    hasNext,
+    hasPrevious
   } = useContext(PlayerContext);
 
   useEffect(() => {
@@ -88,7 +92,7 @@ export default function Player() {
           <button type="button" disabled={!episode}>
             <img src="/shuffle.svg" alt="Embaralhar" />
           </button>
-          <button type="button" disabled={!episode}>
+          <button type="button" disabled={!episode || !hasPrevious} onClick={playPrevious}>
             <img src="/play-previous.svg" alt="Tocar anterior" />
           </button>
           <button
@@ -100,10 +104,10 @@ export default function Player() {
 
             <img src={`/${ isPlaying ? 'pause' : 'play' }.svg`} alt="Tocar" />
           </button>
-          <button type="button" disabled={!episode}>
+          <button type="button" disabled={!episode || !hasNext } onClick={playNext}>
             <img src="/play-next.svg" alt="Tocar próxima" />
           </button>
-          <button type="button" disabled={!episode}>
+          <button type="button" disabled={!episode} >
             <img src="/repeat.svg" alt="Repetir" />
           </button>
         </div>
